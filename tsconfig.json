@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    // Specify ECMAScript target version
+    "target": "ES6",
+    // Specify module code generation
+    "module": "commonjs",
+    // Redirect output structure to the directory
+    "outDir": "./dist",
+    // Specify the root directory of input files
+    "rootDir": "./src",
+    // Enable all strict type-checking options
+    "strict": true,
+    // Enable interoperability between CommonJS and ES Modules
+    "esModuleInterop": true,
+    // Skip type checking of declaration files
+    "skipLibCheck": true,
+    // Ensure consistent casing in file names
+    "forceConsistentCasingInFileNames": true,
+    // Specify type definitions to include
+    "types": ["node", "jest"]
+  },
+  // Include all TypeScript files in the src directory and the types definition file
+  "include": ["src/**/*.ts", "src/types/types.d.ts"],
+  // Exclude the node_modules directory
+  "exclude": ["node_modules"]
+}
