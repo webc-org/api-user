@@ -1,6 +1,6 @@
 import Server from "./server";
+import { PORT } from "./lib/constants";
 
-const PORT = Number(process.env.PORT) || 3000;
 const server = new Server();
 server.start(PORT);
 

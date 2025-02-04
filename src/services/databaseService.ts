@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { mongoUri } from "../lib/constants";
+import { MONGO_URI } from "../lib/constants";
 
 // DatabaseService: Handles all database connection operations
 // Centralizes database management for better maintainability
@@ -7,7 +7,7 @@ export default class DatabaseService {
   // Establishes connection to MongoDB using the provided URI
   // Returns a Promise that resolves when connection is successful
   public async connect(): Promise<void> {
-    await mongoose.connect(mongoUri);
+    await mongoose.connect(MONGO_URI);
   }
 
   // Gracefully closes the MongoDB connection

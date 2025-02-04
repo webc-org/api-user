@@ -1,15 +1,10 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user";
+import { AUTH_SECRET_KEY } from "../lib/constants";
 import { Request, Response, NextFunction } from "express";
 
 // Middleware to authenticate users using JWT
 export default class AuthMiddleware {
-  private secretKey: string;
-
-  constructor() {
-    this.secretKey = process.env.SECRET_KEY || "my-secret-key";
-  }
-
   // Middleware method to authenticate users using JWT
   public async authenticate(
     req: Request,
@@ -27,7 +22,7 @@ export default class AuthMiddleware {
 
     try {
       // Verify the token using the secret key
-      const decoded = jwt.verify(token, this.secretKey) as any;
+      const decoded = jwt.verify(token, AUTH_SECRET_KEY) as any;
 
       // Find the user by the ID encoded in the token
       const user = await User.findById(decoded.id);

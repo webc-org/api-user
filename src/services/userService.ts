@@ -32,6 +32,11 @@ class UserService {
     return User.findById(id).select("-password"); // Find the user by ID and exclude the password field
   }
 
+  // Method to retrieve a user by email
+  async getUserByEmail(email: string): Promise<UserDocument | null> {
+    return User.findOne({ email }).select("-password"); // Find the user by email
+  }
+
   // Method to update user details
   async updateUser(id: string, userData: any): Promise<UserDocument | null> {
     return User.findByIdAndUpdate(id, userData, { new: true }).select(
