@@ -17,7 +17,11 @@
     // Ensure consistent casing in file names
     "forceConsistentCasingInFileNames": true,
     // Specify type definitions to include
-    "types": ["node", "jest"]
+    "types": ["node", "jest"],
+
+    "removeComments": false,
+    "sourceMap": true,
+    "declaration": true
   },
   // Include all TypeScript files in the src directory and the types definition file
   "include": ["src/**/*.ts", "src/types/types.d.ts"],

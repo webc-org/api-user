@@ -1,3 +1,4 @@
+/// <reference path="../types/types.d.ts" />
 import jwt from "jsonwebtoken";
 import User from "../models/user";
 import { AUTH_SECRET_KEY } from "../lib/constants";

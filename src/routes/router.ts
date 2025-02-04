@@ -6,8 +6,18 @@ export default class Router {
 
   constructor() {
     this.router = ExpressRouter();
-
+    this.initializeViews(this.router);
     this.initializeRoutes(this.router);
+  }
+
+  private initializeViews(apiRouter: ExpressRouter): void {
+    apiRouter.get("/login", (req, res) => {
+      res.render("login");
+    });
+
+    apiRouter.get("/signup", (req, res) => {
+      res.render("signup");
+    });
   }
 
   private initializeRoutes(apiRouter: ExpressRouter): void {
