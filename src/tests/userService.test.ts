@@ -21,6 +21,7 @@ describe("UserService", () => {
     userService = new UserService();
   });
 
+  // delete test user before running each tests
   beforeEach(async () => {
     const testUser = await userService.getUserByEmail("testuser@example.com");
     const testUserId = testUser?._id;
