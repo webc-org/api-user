@@ -20,7 +20,8 @@
     "body-parser": "^1.20.3",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.9.5"
+    "mongoose": "^8.9.5",
+    "typedi": "^0.10.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

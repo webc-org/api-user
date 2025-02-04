@@ -1,31 +1,39 @@
-import express from "express";
-import mongoose from "mongoose";
-import bodyParser from "body-parser";
-import userRoutes from "./routes/userRoutes";
-import { mongoUri } from "./lib/constants";
+import express, { Application } from "express";
+import DatabaseService from "./services/databaseService";
+import Router from "./routes/router";
 
-// Create an instance of Express
-const app = express();
+export default class Server {
+  private app: Application;
+  private databaseService: DatabaseService;
+  private router: Router;
 
-// Use body-parser middleware to parse JSON requests
-app.use(bodyParser.json());
+  constructor() {
+    this.app = express();
+    this.databaseService = new DatabaseService();
+    this.router = new Router();
 
-// Connect to MongoDB using the provided URI
-mongoose.connect(mongoUri);
+    this.setupMiddleware();
+    this.setupRoutes();
+  }
 
-// Get the default connection
-const db = mongoose.connection;
+  private setupMiddleware(): void {
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
+  }
 
-// Bind connection to error event (to get notification of connection errors)
-db.on("error", console.error.bind(console, "connection error:"));
+  private setupRoutes(): void {
+    this.app.use(this.router.getRouter());
+  }
 
-// Bind connection to open event (to get notification of successful connection)
-db.once("open", () => console.log("Connected to MongoDB"));
+  public async start(port: number): Promise<void> {
+    await this.databaseService.connect();
 
-// Use the user routes for any requests to /api/users
-app.use("/api/users", userRoutes);
+    this.app.listen(port, () => {
+      console.log(`Server running on port ${port}`);
+    });
+  }
 
-// Start the server and listen on port 3000
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});
+  public async stop(): Promise<void> {
+    await this.databaseService.disconnect();
+  }
+}

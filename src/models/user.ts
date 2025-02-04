@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
 // Define the UserDocument type which extends mongoose.Document
-export type UserDocument = mongoose.Document & {
+export type UserDocument = {
   username: string;
   email: string;
   password: string;

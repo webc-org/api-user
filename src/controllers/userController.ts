@@ -13,11 +13,14 @@ class UserController {
   // Signup method to handle user registration
   async signup(req: Request, res: Response): Promise<void> {
     const userData = req.body;
+
     try {
       const message = await this.userService.signup(userData);
+
       res.status(201).send(message); // Send success response with status 201
     } catch (error) {
       console.error(error); // Log the error for debugging purposes
+
       res.status(400).send((error as Error).message); // Send error response with status 400
     }
   }
@@ -25,11 +28,14 @@ class UserController {
   // Login method to handle user authentication
   async login(req: Request, res: Response): Promise<void> {
     const { username, password } = req.body;
+
     try {
       const { token } = await this.userService.login(username, password);
+
       res.send({ token }); // Send the authentication token
     } catch (error) {
       console.error(error); // Log the error for debugging purposes
+
       res.status(400).send((error as Error).message); // Send error response with status 400
     }
   }
@@ -40,9 +46,11 @@ class UserController {
 
     try {
       const user = await this.userService.getUser(id);
+
       res.send(user); // Send the user data
     } catch (error) {
       console.error(error); // Log the error for debugging purposes
+
       res.status(400).send((error as Error).message); // Send error response with status 400
     }
   }
@@ -50,12 +58,16 @@ class UserController {
   // UpdateUser method to update user details
   async updateUser(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
+
     const userData = req.body;
+
     try {
       const user = await this.userService.updateUser(id, userData);
+
       res.send(user); // Send the updated user data
     } catch (error) {
       console.error(error); // Log the error for debugging purposes
+
       res.status(400).send((error as Error).message); // Send error response with status 400
     }
   }

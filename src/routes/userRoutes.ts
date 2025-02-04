@@ -1,35 +1,48 @@
-import express from "express";
+import { Router as ExpressRouter } from "express";
 import UserController from "../controllers/userController";
 import UserService from "../services/userService";
-import authMiddleware from "../middleware/authMiddleware";
+import AuthMiddleware from "../middleware/authMiddleware";
 
-// Create a new router instance
-const router = express.Router();
+export default class UserRoutes {
+  private userService: UserService;
+  private userController: UserController;
+  private authMiddleware: AuthMiddleware;
 
-// Instantiate the UserService and UserController
-const userService = new UserService();
-const userController = new UserController(userService);
+  constructor(private router: ExpressRouter) {
+    this.userService = new UserService();
+    this.userController = new UserController(this.userService);
+    this.authMiddleware = new AuthMiddleware();
 
-// Define the signup route
-router.post("/signup", (req, res) => userController.signup(req, res));
+    this.initializeRoutes();
+  }
 
-// Define the login route
-router.post("/login", (req, res) => userController.login(req, res));
+  private initializeRoutes(): void {
+    this.router.post(
+      "/user/signup",
+      this.userController.signup.bind(this.userController)
+    );
 
-// Define the get user route, protected by authMiddleware
-router.get("/:id", authMiddleware, (req, res) =>
-  userController.getUser(req, res)
-);
+    this.router.post(
+      "/user/login",
+      this.userController.login.bind(this.userController)
+    );
 
-// Define the update user route, protected by authMiddleware
-router.put("/:id", authMiddleware, (req, res) =>
-  userController.updateUser(req, res)
-);
+    this.router.get(
+      "/user/:id",
+      this.authMiddleware.authenticate,
+      (request, result) => this.userController.getUser(request, result)
+    );
 
-// Define the delete user route, protected by authMiddleware
-router.delete("/:id", authMiddleware, (req, res) =>
-  userController.deleteUser(req, res)
-);
+    this.router.put(
+      "/user/:id",
+      this.authMiddleware.authenticate,
+      (request, result) => this.userController.updateUser(request, result)
+    );
 
-// Export the router to be used in other parts of the application
-export default router;
+    this.router.delete(
+      "/user/:id",
+      this.authMiddleware.authenticate,
+      (request, result) => this.userController.deleteUser(request, result)
+    );
+  }
+}

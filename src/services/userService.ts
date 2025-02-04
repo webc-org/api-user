@@ -1,10 +1,10 @@
-import User from "../models/user";
+import User, { UserDocument } from "../models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 class UserService {
   // Method to handle user registration
-  async signup(userData: any) {
+  async signup(userData: UserDocument) {
     const user = new User(userData); // Create a new user instance with the provided data
 
     await user.save(); // Save the user to the database
@@ -13,7 +13,7 @@ class UserService {
   }
 
   // Method to handle user authentication
-  async login(username: string, password: string) {
+  async login(username: string, password: string): Promise<{ token: string }> {
     const user = await User.findOne({ username }); // Find the user by username
 
     // If user is not found or password does not match, throw an error
@@ -28,19 +28,19 @@ class UserService {
   }
 
   // Method to retrieve a user by ID
-  async getUser(id: string) {
+  async getUser(id: string): Promise<UserDocument | null> {
     return User.findById(id).select("-password"); // Find the user by ID and exclude the password field
   }
 
   // Method to update user details
-  async updateUser(id: string, userData: any) {
+  async updateUser(id: string, userData: any): Promise<UserDocument | null> {
     return User.findByIdAndUpdate(id, userData, { new: true }).select(
       "-password"
     ); // Find the user by ID and update with new data, return the updated user excluding the password field
   }
 
   // Method to delete a user by ID
-  async deleteUser(id: string) {
+  async deleteUser(id: string): Promise<string> {
     await User.findByIdAndDelete(id); // Find the user by ID and delete
 
     return "User deleted"; // Return a success message

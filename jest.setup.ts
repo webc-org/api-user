@@ -1,12 +1,22 @@
 import mongoose from "mongoose";
+import { mongoUri } from "./lib/constants";
 
 beforeAll(async () => {
-  await mongoose.connect(global.__MONGO_URI__, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  try {
+    await mongoose.connect(mongoUri);
+    console.log("Connected to test database successfully");
+  } catch (error) {
+    console.error("Error connecting to test database:", error);
+    throw error;
+  }
 });
 
 afterAll(async () => {
-  await mongoose.connection.close();
+  try {
+    await mongoose.connection.close();
+    console.log("Database connection closed successfully");
+  } catch (error) {
+    console.error("Error closing database connection:", error);
+    throw error;
+  }
 });
