@@ -28,7 +28,7 @@ class UserService {
   }
 
   // Method to retrieve a user by ID
-  async getUser(id: string): Promise<UserDocument | null> {
+  async getUserById(id: string): Promise<UserDocument | null> {
     return User.findById(id).select("-password"); // Find the user by ID and exclude the password field
   }
 

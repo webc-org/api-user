@@ -45,7 +45,7 @@ class UserController {
     const { id } = req.params;
 
     try {
-      const user = await this.userService.getUser(id);
+      const user = await this.userService.getUserById(id);
 
       res.send(user); // Send the user data
     } catch (error) {

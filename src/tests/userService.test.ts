@@ -16,14 +16,16 @@ describe("UserService", () => {
     phone: "123-456-7890",
   };
 
+  // Connect to the DB before running the tests
   beforeAll(async () => {
     await mongoose.connect(MONGO_URI);
     userService = new UserService();
   });
 
-  // delete test user before running each tests
+  // Delete test user before running each tests
   beforeEach(async () => {
     const testUser = await userService.getUserByEmail("testuser@example.com");
+
     const testUserId = testUser?._id;
 
     if (testUserId) {
@@ -45,13 +47,6 @@ describe("UserService", () => {
 
   // Test case for logging in a user
   it("should login a user", async () => {
-    const testUser = await userService.getUserByEmail("testuser@example.com");
-    const testUserId = testUser?._id;
-
-    if (testUserId) {
-      await userService.deleteUser(testUserId);
-    }
-
     // Save the user to the database
     await new User(testUserData).save();
 
