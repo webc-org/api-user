@@ -1,21 +1,29 @@
-module.exports = {
-  env: {
-    node: true,
-    es2021: true,
-    jest: true,
-  },
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-  ],
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-  },
-  plugins: ['@typescript-eslint'],
-  rules: {
-    // Add your custom rules here
-  },
-};
+const globals = require('globals');
+const tseslint = require('typescript-eslint');
 
+module.exports = [
+  {
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.es2021,
+        ...globals.jest,
+      },
+      parser: tseslint.parser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      },
+    },
+    plugins: {
+      '@typescript-eslint': tseslint.plugin,
+    },
+    rules: {
+      // Add your custom rules here
+    },
+    extends: [
+      'eslint:recommended',
+      ...tseslint.configs.recommended,
+    ],
+  },
+];
