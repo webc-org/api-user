@@ -6,8 +6,10 @@ export default class Router {
 
   constructor() {
     this.router = ExpressRouter();
-    this.initializeViews(this.router);
     this.initializeRoutes(this.router);
+
+    // ADD EJS VIEWS
+    this.initializeViews(this.router);
   }
 
   private initializeViews(apiRouter: ExpressRouter): void {
@@ -26,7 +28,7 @@ export default class Router {
     this.router.use("/api", apiRouter);
   }
 
-  public getRouter(): ExpressRouter {
+  public getRoutes(): ExpressRouter {
     return this.router;
   }
 }

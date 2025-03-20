@@ -1,10 +1,10 @@
-import Server from "./server";
+import App from "./app";
 import { PORT } from "./lib/constants";
 
-const server = new Server();
+const app = new App();
 
-server.start(PORT);
+app.start(PORT);
 
 process.on("SIGTERM", () => {
-  server.stop();
+  app.stop();
 });

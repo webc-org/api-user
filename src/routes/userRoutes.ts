@@ -28,21 +28,21 @@ export default class UserRoutes {
     );
 
     this.router.get(
-      "/user/:id",
+      "/user/:id", //
       this.authMiddleware.authenticate,
-      (request, result) => this.userController.getUser(request, result)
+      (req, res) => this.userController.getUser(req, res)
     );
 
     this.router.put(
-      "/user/:id",
+      "/user/:id", //
       this.authMiddleware.authenticate,
-      (request, result) => this.userController.updateUser(request, result)
+      (req, res) => this.userController.updateUser(req, res)
     );
 
     this.router.delete(
-      "/user/:id",
+      "/user/:id", //
       this.authMiddleware.authenticate,
-      (request, result) => this.userController.deleteUser(request, result)
+      (req, res) => this.userController.deleteUser(req, res)
     );
   }
 }

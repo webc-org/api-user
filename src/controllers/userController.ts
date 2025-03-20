@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import UserService from "../services/userService";
 
 // UserController class to handle user-related requests
-class UserController {
+export default class UserController {
   private userService: UserService;
 
   // Constructor to initialize the UserService
@@ -84,5 +84,3 @@ class UserController {
     }
   }
 }
-
-export default UserController;

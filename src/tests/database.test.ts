@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import DatabaseService from "../services/databaseService";
-import { MONGO_URI } from "../lib/constants";
 
 describe("Database Connection", () => {
   let dbService: DatabaseService;

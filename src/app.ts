@@ -1,12 +1,12 @@
 import express, { Application } from "express";
 import helmet from "helmet";
-import DatabaseService from "./services/databaseService";
 import Router from "./routes/router";
+import DatabaseService from "./services/databaseService";
 
-export default class Server {
+export default class App {
   private app: Application;
-  private databaseService: DatabaseService;
   private router: Router;
+  private databaseService: DatabaseService;
 
   constructor() {
     this.app = express();
@@ -30,7 +30,7 @@ export default class Server {
   }
 
   private setupRoutes(): void {
-    this.app.use(this.router.getRouter());
+    this.app.use(this.router.getRoutes());
   }
 
   private setupViews(): void {

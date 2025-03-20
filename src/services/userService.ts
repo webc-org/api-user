@@ -5,16 +5,19 @@ import jwt from "jsonwebtoken";
 class UserService {
   // Method to handle user registration
   async signup(userData: UserDocument) {
-    const user = new User(userData); // Create a new user instance with the provided data
+    // Create a new user instance with the provided data
+    const user = new User(userData);
 
-    await user.save(); // Save the user to the database
+    // Save the user to the database
+    await user.save();
 
-    return "User created"; // Return a success message
+    return "User created";
   }
 
   // Method to handle user authentication
   async login(username: string, password: string): Promise<{ token: string }> {
-    const user = await User.findOne({ username }); // Find the user by username
+    // Find the user by username
+    const user = await User.findOne({ username });
 
     // If user is not found or password does not match, throw an error
     if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -29,19 +32,23 @@ class UserService {
 
   // Method to retrieve a user by ID
   async getUserById(id: string): Promise<UserDocument | null> {
-    return User.findById(id).select("-password"); // Find the user by ID and exclude the password field
+    // Find the user by ID and exclude the password field
+    return User.findById(id).select("-password");
   }
 
   // Method to retrieve a user by email
   async getUserByEmail(email: string): Promise<UserDocument | null> {
-    return User.findOne({ email }).select("-password"); // Find the user by email
+    // Find the user by email
+    return User.findOne({ email }).select("-password");
   }
 
   // Method to update user details
   async updateUser(id: string, userData: any): Promise<UserDocument | null> {
+    // Find the user by ID and update with new data,
+    // return the updated user excluding the password field
     return User.findByIdAndUpdate(id, userData, { new: true }).select(
       "-password"
-    ); // Find the user by ID and update with new data, return the updated user excluding the password field
+    );
   }
 
   // Method to delete a user by ID
