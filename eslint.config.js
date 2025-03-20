@@ -5,7 +5,7 @@ module.exports = [
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    files: ['**/*.{js,ts,jsx,tsx}'],
+    files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
