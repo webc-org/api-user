@@ -6,6 +6,7 @@ on:
 
 jobs:
   install:
+    name: Install & Test
     runs-on: ubuntu-latest
 
     services:
