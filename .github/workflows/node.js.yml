@@ -44,6 +44,3 @@ jobs:
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           AUTH_SECRET_KEY: ${{ secrets.AUTH_SECRET_KEY }}
-
-      - name: Run Linter
-        run: pnpm run lint

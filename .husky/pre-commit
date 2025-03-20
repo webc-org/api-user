@@ -1,0 +1,10 @@
+#!/bin/sh
+# Ensure the correct PATH for pnpm and node_modules binaries
+export PATH=$PATH:$(pwd)/node_modules/.bin
+export PATH="$HOME/Library/pnpm:$PATH"
+
+# Run linting with lint-staged
+npx lint-staged
+
+# Run tests using pnpm
+pnpx pnpm test:ci
