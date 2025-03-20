@@ -4,7 +4,7 @@ import { UserDocument } from "../models/user";
 declare global {
   namespace Express {
     interface Request {
-      user?: UserDocument; // Optional user property of type UserDocument
+      user?: UserDocument;
     }
   }
 }

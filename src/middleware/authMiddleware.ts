@@ -1,3 +1,5 @@
+/// <reference path="../types/types.d.ts" />
+
 import jwt from "jsonwebtoken";
 import User from "../models/user";
 import { AUTH_SECRET_KEY } from "../lib/constants";
@@ -7,7 +9,7 @@ import { Request, Response, NextFunction } from "express";
 export default class AuthMiddleware {
   // Middleware method to authenticate users using JWT
   public async authenticate(
-    req: Request,
+    req: Request = {} as Request,
     res: Response,
     next: NextFunction
   ): Promise<void> {

@@ -14,7 +14,8 @@ module.exports = [
       reportUnusedDisableDirectives: true,
     },
     rules: {
-      "@typescript-eslint/no-require-imports": "off"
+      "@typescript-eslint/no-require-imports": "off",
+      "@typescript-eslint/triple-slash-reference": "off"
     },
     ignores: [
       'eslint.config.js',
