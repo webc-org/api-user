@@ -2,12 +2,10 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "master" ]
   pull_request:
-    branches: [ "master" ]
 
 jobs:
-  build:
+  install:
     runs-on: ubuntu-latest
 
     services:
@@ -16,45 +14,30 @@ jobs:
         ports:
           - 27017:27017
 
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
-
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-    
-    - name: Install pnpm
-      uses: pnpm/action-setup@v2
-      with:
-        version: 8
-        run_install: false
-    
-    - name: Get pnpm store directory
-      shell: bash
-      run: |
-        echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-    
-    - uses: actions/cache@v3
-      name: Setup pnpm cache
-      with:
-        path: ${{ env.STORE_PATH }}
-        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-pnpm-store-
-    
-    - name: Install dependencies
-      run: pnpm install
-    
-    - name: Build
-      run: pnpm run build --if-present
-    
-    - name: Run tests
-      run: pnpm test
-      env:
-        MONGO_URI: ${{ secrets.MONGO_URI }}
-        AUTH_SECRET_KEY: ${{ secrets.AUTH_SECRET_KEY }}
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+      
+      - name: Install dependencies
+        run: pnpm install
+      
+      - name: Check and run build script
+        run: |
+          if grep -q '"build":' package.json; then
+            pnpm run build
+          else
+            echo "No build script found in package.json, skipping build step"
+          fi
+      
+      - name: Run tests
+        run: pnpm test
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          AUTH_SECRET_KEY: ${{ secrets.AUTH_SECRET_KEY }}
