@@ -14,7 +14,9 @@ describe("Database Connection", () => {
 
   it("successfully connects to the database", async () => {
     await dbService.connect();
+
     const connectionState = mongoose.connection.readyState;
+
     expect(connectionState).toBe(1);
   });
 });

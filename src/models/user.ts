@@ -13,7 +13,7 @@ export type UserDocument = {
   phone: string;
 };
 
-// Define the User schema
+// Define the UserSchema
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   username: { type: String, required: true },
@@ -41,4 +41,8 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
-export default mongoose.model<UserDocument>("User", UserSchema);
+// Define the UserModel
+const UserModel = mongoose.model<UserDocument>("User", UserSchema);
+
+// Export the UserModel
+export default UserModel;

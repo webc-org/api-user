@@ -1,10 +1,9 @@
 import UserService from "../services/userService";
-import { MONGO_URI } from "../lib/constants";
-import User from "../models/user";
-import mongoose from "mongoose";
+import DatabaseService from "../services/databaseService";
 
 describe("UserService", () => {
   let userService: UserService;
+  let dbService: DatabaseService;
 
   const testUserData = {
     username: "testuser",
@@ -18,11 +17,13 @@ describe("UserService", () => {
 
   // Connect to the DB before running the tests
   beforeAll(async () => {
-    await mongoose.connect(MONGO_URI);
+    dbService = new DatabaseService();
     userService = new UserService();
+
+    await dbService.connect();
   });
 
-  // Close the MongoDB connection after running the tests
+  // Close the DB connection after running the tests
   afterAll(async () => {
     const testUser = await userService.getUserByEmail("testuser@example.com");
 
@@ -32,7 +33,7 @@ describe("UserService", () => {
       await userService.deleteUser(testUserId);
     }
 
-    await mongoose.connection.close();
+    await dbService.disconnect();
   });
 
   // Test case for creating a new user
@@ -47,17 +48,13 @@ describe("UserService", () => {
 
     const message = await userService.signup(testUserData);
 
-    expect(message).toBe("User created"); // Expect the signup method to return "User created"
+    expect(message).toBe("User created");
   });
 
   // Test case for logging in a user
   it("should login a user", async () => {
-    // Save the user to the database
-    // await new User(testUserData).save();
-
-    // Attempt to login with the saved user's credentials
     const { token } = await userService.login("testuser", "password123");
 
-    expect(token).toBeDefined(); // Expect the login method to return a defined token
+    expect(token).toBeDefined();
   });
 });
