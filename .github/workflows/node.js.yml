@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Build and Test
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   install:
-    name: Install & Test
+    name: Build and Test
     runs-on: ubuntu-latest
 
     services:
