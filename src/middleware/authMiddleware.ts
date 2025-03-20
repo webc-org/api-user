@@ -1,4 +1,3 @@
-/// <reference path="../types/types.d.ts" />
 import jwt from "jsonwebtoken";
 import User from "../models/user";
 import { AUTH_SECRET_KEY } from "../lib/constants";
@@ -23,7 +22,7 @@ export default class AuthMiddleware {
 
     try {
       // Verify the token using the secret key
-      const decoded = jwt.verify(token, AUTH_SECRET_KEY) as any;
+      const decoded = jwt.verify(token, AUTH_SECRET_KEY) as { id: string };
 
       // Find the user by the ID encoded in the token
       const user = await User.findById(decoded.id);

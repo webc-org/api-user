@@ -43,7 +43,10 @@ class UserService {
   }
 
   // Method to update user details
-  async updateUser(id: string, userData: any): Promise<UserDocument | null> {
+  async updateUser(
+    id: string,
+    userData: UserDocument
+  ): Promise<UserDocument | null> {
     // Find the user by ID and update with new data,
     // return the updated user excluding the password field
     return User.findByIdAndUpdate(id, userData, { new: true }).select(

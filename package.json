@@ -10,7 +10,7 @@
     "test": "echo \"Skipping tests in development\"",
     "test:ci": "jest",
     "watch": "tsc --watch",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint ./src --ext .ts",
     "prepare": "husky"
   },
   "keywords": [],

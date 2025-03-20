@@ -14,8 +14,12 @@ module.exports = [
       reportUnusedDisableDirectives: true,
     },
     rules: {
-      // Your custom rules here
+      "@typescript-eslint/no-require-imports": "off"
     },
+    ignores: [
+      'eslint.config.js',
+      'jest.config.js',
+    ],
   },
 ];
 
