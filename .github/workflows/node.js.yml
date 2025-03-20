@@ -39,7 +39,7 @@ jobs:
           fi
 
       - name: Run tests
-        run: pnpm test
+        run: pnpm test:ci
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           AUTH_SECRET_KEY: ${{ secrets.AUTH_SECRET_KEY }}
