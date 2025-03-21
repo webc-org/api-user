@@ -1,3 +1,3 @@
-### CRUD
+### CRUD!
 
-## express mongoose
+typescript, express, mongoose, mongo
